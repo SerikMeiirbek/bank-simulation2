@@ -1,6 +1,6 @@
 package com.cydeo.service.impl;
 
-import com.cydeo.entity.Account;
+import com.cydeo.model.Account;
 import com.cydeo.enums.AccountType;
 import com.cydeo.repository.AccountRepository;
 import com.cydeo.service.AccountService;
@@ -32,6 +32,16 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<Account> listAllAccount() {
         return accountRepository.findAll();
+    }
+
+    @Override
+    public void deleteAccount(UUID id) {
+        accountRepository.deleteAccount(id);
+    }
+
+    @Override
+    public Account retrieveById(UUID accountId) {
+        return accountRepository.findById(accountId);
     }
 
 }

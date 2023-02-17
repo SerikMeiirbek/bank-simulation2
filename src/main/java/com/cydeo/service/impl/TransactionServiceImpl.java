@@ -1,7 +1,7 @@
 package com.cydeo.service.impl;
 
-import com.cydeo.entity.Account;
-import com.cydeo.entity.Transaction;
+import com.cydeo.model.Account;
+import com.cydeo.model.Transaction;
 import com.cydeo.enums.AccountType;
 import com.cydeo.exception.AccountOwnershipException;
 import com.cydeo.exception.BadRequestException;
@@ -71,9 +71,9 @@ public class TransactionServiceImpl implements TransactionService {
             throw new BadRequestException("Sender or receiver can not be null");
         }
 
-        if(sender.getId().equals(receiver.getId())){
-            throw new BadRequestException("Sender and receiver can not be the same");
-        }
+//        if(sender.getId().equals(receiver.getId())){
+//            throw new BadRequestException("Sender and receiver can not be the same");
+//        }
 
         findAccountById(sender.getId());
         findAccountById(receiver.getId());
@@ -83,14 +83,31 @@ public class TransactionServiceImpl implements TransactionService {
         return accountRepository.findById(accountId);
     }
 
-    private void checkAccountOwnerShip(Account sender, Account receiver){
-        if(sender.getAccountType().equals(AccountType.SAVING) || receiver.getAccountType().equals(AccountType.SAVING) && !sender.getUserId().equals(receiver.getUserId())){
-            throw new AccountOwnershipException("When one of the account type is SAVING, sender and receiver has to be the same person");
+//    private void checkAccountOwnerShip(Account sender, Account receiver){
+//        if(sender.getAccountType().equals(AccountType.SAVING) || receiver.getAccountType().equals(AccountType.SAVING) && !sender.getUserId().equals(receiver.getUserId())){
+//            throw new AccountOwnershipException("When one of the account type is SAVING, sender and receiver has to be the same person");
+//        }
+//    }
+
+    private void checkAccountOwnerShip(Account sender, Account receiver) {
+        if((sender.getAccountType().equals(AccountType.SAVING) || receiver.getAccountType().equals(AccountType.SAVING))
+                && !sender.getUserId().equals(receiver.getUserId())){
+            throw new AccountOwnershipException("When one of the account type is SAVINGS, sender and receiver has tobe same person");
         }
     }
 
     @Override
     public List<Transaction> findAll() {
         return transactionRepository.findAll();
+    }
+
+    @Override
+    public List<Transaction> retrieveLastTransaction() {
+        return transactionRepository.retrieveLastTransactions();
+    }
+
+    @Override
+    public List<Transaction> findTransactionListById(UUID transactionId) {
+        return transactionRepository.findTransactionListById(transactionId);
     }
 }

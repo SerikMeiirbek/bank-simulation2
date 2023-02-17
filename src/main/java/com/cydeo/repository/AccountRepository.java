@@ -1,6 +1,7 @@
 package com.cydeo.repository;
 
-import com.cydeo.entity.Account;
+import com.cydeo.enums.AccountStatus;
+import com.cydeo.model.Account;
 import com.cydeo.exception.RecordNotFoundException;
 import org.springframework.stereotype.Component;
 
@@ -28,4 +29,7 @@ public class AccountRepository {
     }
 
 
+    public void deleteAccount(UUID id) {
+        findById(id).setAccountStatus(AccountStatus.DELETED);
+    }
 }

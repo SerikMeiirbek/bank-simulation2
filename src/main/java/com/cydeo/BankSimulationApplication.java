@@ -1,25 +1,17 @@
 package com.cydeo;
 
-import com.cydeo.entity.Account;
-import com.cydeo.entity.Transaction;
-import com.cydeo.enums.AccountType;
-import com.cydeo.service.AccountService;
-import com.cydeo.service.TransactionService;
-import com.cydeo.service.impl.AccountServiceImpl;
-import com.cydeo.service.impl.TransactionServiceImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-
-import java.math.BigDecimal;
-import java.util.Date;
 
 @SpringBootApplication
 public class BankSimulationApplication {
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(BankSimulationApplication.class, args);
-        AccountService accountService = applicationContext.getBean(AccountServiceImpl.class);
+
+
+        /*AccountService accountService = applicationContext.getBean(AccountServiceImpl.class);
         TransactionService transactionService = applicationContext.getBean(TransactionServiceImpl.class);
 
         Account receiver = accountService.createNewAccount(BigDecimal.TEN, new Date(), AccountType.CHECKING, 1L);
@@ -36,6 +28,8 @@ public class BankSimulationApplication {
 
         System.out.println(transactionService.findAll().get(1));
         accountService.listAllAccount().forEach(System.out::println);
+        */
+
 
     }
 
