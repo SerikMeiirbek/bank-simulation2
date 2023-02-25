@@ -10,10 +10,10 @@
         <link rel="stylesheet" href="../css/shards.min.css">
     </head>
     <body>
-        <div class="container my-5">
+        <div class="container my-5" th:object="${transaction}">
             <div class="row">
                 <div class="col-md-6">
-                    <div th:if="${transactionList.size()==0}">
+                    <div th:if="${transactionList==0}">
                         <h2>No Transactions yet!</h2>
                     </div>
                     <div th:unless="${transactionList.size()==0}">

@@ -6,8 +6,10 @@ import com.cydeo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.UUID;
 
@@ -32,11 +34,16 @@ public class AccountController {
     public String createForm(Model model){
         model.addAttribute("account", Account.builder().build());
         model.addAttribute("accountTypes", AccountType.values());
-        return "account/create-account.html";
+        return "account/create-account";
     }
 
     @PostMapping("/create")
-    public String create(Model model, @ModelAttribute("account") Account account){
+    public String create(@Valid Model model, @ModelAttribute("account") Account account, BindingResult bindingResult){
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("accountTypes", AccountType.values());
+            return "account/create-account";
+        }
 
         accountService.createNewAccount(account.getBalance()
                                             ,new Date(),
