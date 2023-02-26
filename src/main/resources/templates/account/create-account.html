@@ -17,26 +17,42 @@
     <div class="row">
         <div class="col-md-3">
             <form th:action="@{/create}" method="post" th:object="${account}" >
-                <div th:if="${#fields.hasErrors('')}"></div>
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <p th:text="#{general.hasErrors}">Error Message</p>
+                </div>
                 <div class="row">
-                    <div class="form-group blu-margin">
+                    <div class="form-group blu-margin" th:class="${#fields.hasErrors('userId')} ? 'form-group has-errors' : 'form-group'">
                         <label for="userId" class="col-form-label">UserId</label>
                         <input type="text" th:field="*{userId}" class="form-control" id="userId" placeholder="user id">
+                        <span th:class="help-block" th:if = "${#fields.hasErrors('userId')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('userId')}" th:text="${err}"></li>
+                            </ul>
+                        </span>
                     </div>
 
-                    <div class="form-group blu-margin">
+                    <div class="form-group blu-margin" th:class="${#fields.hasErrors('balance')} ? 'form-group has-errors' : 'form-group'">
                         <label for="balance" class="col-form-label">Balance</label>
                         <input type="text" th:field="*{balance}" class="form-control" id="balance" placeholder="balance">
+                        <span th:class="help-block" th:if = "${#fields.hasErrors('balance')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('balance')}" th:text="${err}"></li>
+                            </ul>
+                        </span>
                     </div>
 
-                    <div class="form-group blu-margin">
+                    <div class="form-group blu-margin" th:class="${#fields.hasErrors('accountType')} ? 'form-group has-errors' : 'form-group'">
                         <label for="dropOperator" class="col-form-label">Account Type</label>
                         <select th:field="*{accountType}" class="form-control"  id="dropOperator">
                             <option value="0">Select Account </option>
                             <option th:each="accountType : ${accountTypes}" th:value="${accountType.name()}"
                             th:text="${accountType.name}"></option>
-
                         </select>
+                        <span th:class="help-block" th:if = "${#fields.hasErrors('accountType')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('accountType')}" th:text="${err}"></li>
+                            </ul>
+                        </span>
                     </div>
                 </div>
                 <div class="row">

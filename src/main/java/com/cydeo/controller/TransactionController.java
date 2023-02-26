@@ -7,7 +7,10 @@ import com.cydeo.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.UUID;
 
@@ -33,7 +36,12 @@ public class TransactionController {
     }
 
     @PostMapping("/transfer")
-    public String transfer(@ModelAttribute ("transaction") Transaction transaction){
+    public String transfer(@Valid @ModelAttribute ("transaction") Transaction transaction, BindingResult bindingResult, Model model){
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("accounts", accountService.listAllAccount());
+            return "transaction/make-transfer";
+        }
 
         Account receiver = accountService.retrieveById(transaction.getReceiver());
         Account sender   = accountService.retrieveById(transaction.getReceiver());
