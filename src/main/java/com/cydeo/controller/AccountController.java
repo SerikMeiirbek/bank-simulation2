@@ -24,7 +24,7 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @GetMapping("/index")
+    @RequestMapping(value={"", "/", "/index"})
     public String accountList(Model model){
         model.addAttribute("accountList", accountService.listAllAccount());
         return "account/index";
